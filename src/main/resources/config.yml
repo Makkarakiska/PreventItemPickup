@@ -6,6 +6,7 @@ database:
   name: minecraft
 messages:
   item-added: "&aAdded the item to the prevented list!"
+  item-already-added: "&cThat item has already added to the prevented list!"
   item-removed: "&aRemoved the item from the prevented list!"
   item-not-found: "&cCould not find an item with that name."
   item-list-prefix: "&7Prevented items: "
