@@ -1,6 +1,6 @@
 name: PreventItemPickup
 version: ${project.version}
-main: dev.masa.preventitempickup.PreventItemPickups
+main: dev.masa.preventitempickup.PreventItemPickup
 api-version: 1.13
 prefix: PreventItemPickup
 authors: [Masa]

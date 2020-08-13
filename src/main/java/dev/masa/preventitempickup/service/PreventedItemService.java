@@ -36,7 +36,6 @@ public class PreventedItemService {
 
     public void loadPreventedItems(UUID owner) {
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            plugin.getLogger().log(Level.INFO, "Loading from database.");
             try {
                 List<PreventedItem> items = this.itemsDao.queryForEq("owner", owner);
                 this.mapMaterials(items, materials -> {
@@ -53,7 +52,6 @@ public class PreventedItemService {
             try {
                 this.itemsDao.create(item);
                 this.updateToCache(item.getOwner(), Material.matchMaterial(item.getMaterial()));
-                plugin.getLogger().log(Level.INFO, "Added prevented item to database.");
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -74,7 +72,6 @@ public class PreventedItemService {
                     this.itemsDao.delete(item);
                 }
                 this.removeFromCache(owner, material);
-                plugin.getLogger().log(Level.INFO, "Removed prevented item from database.");
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
