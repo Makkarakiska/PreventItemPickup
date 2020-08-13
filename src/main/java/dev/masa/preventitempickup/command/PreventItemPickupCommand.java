@@ -16,13 +16,13 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 @AllArgsConstructor
-@CommandAlias("preventitempickups|preventitempickup|pip|preventitem")
+@CommandAlias("pip|preventitempickup|preventitem")
 public class PreventItemPickupCommand extends BaseCommand {
 
     private PreventItemPickup plugin;
 
     @CommandAlias("add")
-    @CommandPermission("preventitempickups.item.add")
+    @CommandPermission("preventitempickup.item.add")
     public void addItem(Player player, @Single String material) {
         if (material.equalsIgnoreCase("hand")) {
             if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
@@ -41,7 +41,7 @@ public class PreventItemPickupCommand extends BaseCommand {
     }
 
     @CommandAlias("remove")
-    @CommandPermission("preventitempickups.item.remove")
+    @CommandPermission("preventitempickup.item.remove")
     public void removeItem(Player player, @Single String material) {
         if (Material.matchMaterial(material) != null) {
             plugin.getPreventedItemService().removePreventedItem(player.getUniqueId(), Material.matchMaterial(material));
@@ -53,7 +53,7 @@ public class PreventItemPickupCommand extends BaseCommand {
 
 
     @CommandAlias("list")
-    @CommandPermission("preventitempickups.item.list")
+    @CommandPermission("preventitempickup.item.list")
     public void listItems(Player player) {
         List<Material> materials = plugin.getPreventedItemService().getPreventedItems(player.getUniqueId());
 
