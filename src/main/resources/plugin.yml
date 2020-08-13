@@ -1,8 +1,8 @@
-name: PreventItemPickups
+name: PreventItemPickup
 version: ${project.version}
-main: dev.masa.preventitempickups.PreventItemPickups
+main: dev.masa.preventitempickup.PreventItemPickups
 api-version: 1.13
-prefix: PreventItemPickups
+prefix: PreventItemPickup
 authors: [Masa]
-description: Let players to prevent picking up items
+description: Let players prevent picking up items
 website: https://masa.dev

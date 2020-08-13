@@ -1,0 +1,14 @@
+database:
+  address: localhost
+  port: 3306
+  username: minecraft
+  password: minecraft
+  name: minecraft
+messages:
+  item-added: "&aAdded the item to the prevented list!"
+  item-removed: "&aRemoved the item from the prevented list!"
+  item-not-found: "&cCould not find an item with that name."
+  item-list-prefix: "&7Prevented items: "
+  item-list-item: "&a%item%"
+  item-list-item-separator: "&7, "
+  hand-is-empty: "&cYour hand is empty!"
