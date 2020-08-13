@@ -3,6 +3,7 @@ package dev.masa.preventitempickup.command;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Single;
 import dev.masa.preventitempickup.PreventItemPickup;
 import dev.masa.preventitempickup.model.PreventedItem;
@@ -22,6 +23,7 @@ public class PreventItemPickupCommand extends BaseCommand {
     private PreventItemPickup plugin;
 
     @CommandAlias("add")
+    @Description("Add an item to prevented list.")
     @CommandPermission("preventitempickup.item.add")
     public void addItem(Player player, @Single String material) {
         if (material.equalsIgnoreCase("hand")) {
@@ -32,6 +34,10 @@ public class PreventItemPickupCommand extends BaseCommand {
             material = player.getInventory().getItemInMainHand().getType().name();
         }
         if (Material.matchMaterial(material) != null) {
+            if (plugin.getPreventedItemService().getPreventedItems(player.getUniqueId()).contains(Material.matchMaterial(material))) {
+                sendMessage(player, plugin.getConfig().getString("messages.item-already-added"));
+                return;
+            }
             PreventedItem item = new PreventedItem(material, player.getUniqueId());
             plugin.getPreventedItemService().addPreventedItem(item);
             sendMessage(player, plugin.getConfig().getString("messages.item-added"));
@@ -41,9 +47,14 @@ public class PreventItemPickupCommand extends BaseCommand {
     }
 
     @CommandAlias("remove")
+    @Description("Remove an item from the prevented list.")
     @CommandPermission("preventitempickup.item.remove")
     public void removeItem(Player player, @Single String material) {
         if (Material.matchMaterial(material) != null) {
+            if (!plugin.getPreventedItemService().getPreventedItems(player.getUniqueId()).contains(Material.matchMaterial(material))) {
+                sendMessage(player, plugin.getConfig().getString("messages.item-not-found"));
+                return;
+            }
             plugin.getPreventedItemService().removePreventedItem(player.getUniqueId(), Material.matchMaterial(material));
             sendMessage(player, plugin.getConfig().getString("messages.item-removed"));
             return;
@@ -53,11 +64,12 @@ public class PreventItemPickupCommand extends BaseCommand {
 
 
     @CommandAlias("list")
+    @Description("List all prevented items.")
     @CommandPermission("preventitempickup.item.list")
     public void listItems(Player player) {
         List<Material> materials = plugin.getPreventedItemService().getPreventedItems(player.getUniqueId());
 
-        String prefix =  colorize(plugin.getConfig().getString("messages.item-list-prefix"));
+        String prefix = colorize(plugin.getConfig().getString("messages.item-list-prefix"));
         String item = colorize(plugin.getConfig().getString("messages.item-list-item"));
         String separator = colorize(plugin.getConfig().getString("messages.item-list-item-separator"));
 
@@ -73,7 +85,7 @@ public class PreventItemPickupCommand extends BaseCommand {
         player.sendMessage(component.toLegacyText());
     }
 
-    private String colorize(String message){
+    private String colorize(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
